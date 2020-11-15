@@ -176,6 +176,10 @@ let g:rainbow_conf = {
 \	'operators': '_,_',
 \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold','start=/{/ end=/}/ fold']
 \}
+
+
+" Include the below lines inside rainbow config only if needed.
+" Don't forget to match the '{}'.
 " \	'separately': {
 " \		'*': {},
 " \		'markdown': {
