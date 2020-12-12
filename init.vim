@@ -1,5 +1,7 @@
+
 syntax on
 filetype indent plugin on
+
 " ---------------------------- Set --------------------------------
 
 set noerrorbells
@@ -25,7 +27,7 @@ set cursorline
 set confirm
 set clipboard=unnamedplus
 set mouse=a
-set ttymouse=xterm2
+" set ttymouse=xterm2
 set laststatus=2
 set list          " Display unprintable characters f12 - switches
 set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
@@ -374,9 +376,9 @@ let g:clang_format#auto_format = 1
 nnoremap <C-p> :Files<cr>
 nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>s :BLines<cr>
-" let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 " Empty value to disable preview window altogether
-let g:fzf_preview_window = []
+" let g:fzf_preview_window = []
 
 " find word under cursor
 nnoremap <leader>prr :CocSearch <C-R>=expand("<cword>")<CR><CR>
@@ -423,8 +425,8 @@ let g:coc_explorer_global_presets = {
 \ }
 
 " Use preset argument to open it
-nmap <space>ed :CocCommand explorer --preset .vim<CR>
-" nmap <space>ef :CocCommand explorer --preset floating<CR>
+nmap <space>ed :CocCommand explorer --preset .config/nvim<CR>
+nmap <space>ef :CocCommand explorer --preset floating<CR>
 nmap <space>ec :CocCommand explorer --preset CocConfig<CR>
 
 nmap <C-n> :CocCommand explorer<CR>
