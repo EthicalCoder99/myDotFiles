@@ -1,3 +1,4 @@
+zmodload zsh/zprof
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -69,14 +70,16 @@ HIST_STAMPS="dd.mm.yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+    evalcache
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
     extract
     colored-man-pages
     # sudo
-    history    
+    history
     tmux
+    nvm
     )
 
 source $ZSH/oh-my-zsh.sh
@@ -95,6 +98,7 @@ else
   export EDITOR='vim'
 fi
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=243,underline"
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -108,8 +112,22 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+_evalcache jenv init -
 
 alias zshconfig="vim ~/.zshrc"
+alias zshsource="source ~/.zshrc"
 alias python="python3"
 alias pip="pip3"
+alias vimconfig="vim ~/.vimrc"
+
+export NVM_LAZY_LOAD=true
+export NVM_COMPLETION=true
+
+export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
+# timezsh() {
+#   shell=${1-$SHELL}
+#   for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+# }

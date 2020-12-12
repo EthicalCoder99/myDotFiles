@@ -22,6 +22,8 @@ set noshowmode
 set completeopt=menuone,noinsert,noselect
 set encoding=UTF-8
 set relativenumber
+set cursorline
+set confirm
 set clipboard=unnamedplus
 set mouse=a
 set ttymouse=xterm2
@@ -62,19 +64,17 @@ if has("patch-8.1.1564")
 else
   set signcolumn=yes
 endif
+if has('termguicolors')
+  set termguicolors
+endif
+set wildmode=list:longest,list:full
 " --------------------------- Plugins -----------------------------
 
 call plug#begin('~/.vim/plugged')
-Plug 'morhetz/gruvbox'
 Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-commentary'
-Plug 'scrooloose/nerdtree'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jiangmiao/auto-pairs'
-" Plug 'itchyny/lightline.vim'
-" Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -83,15 +83,15 @@ Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rhysd/vim-clang-format'
+Plug 'sheerun/vim-polyglot'
+Plug 'ap/vim-css-color'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Plug 'arcticicestudio/nord-vim'
+Plug 'rafi/awesome-vim-colorschemes'
 call plug#end()
 
 " -------------------- Custom Settings ----------------------------
-
-
-colorscheme gruvbox
-set background=dark
-
-
 " This is for commenting lines.
 nmap <C-_> <Plug>CommentaryLine
 vmap <C-_> <Plug>Commentary
@@ -99,16 +99,6 @@ vmap <C-_> <Plug>Commentary
 " This is for compiling and executing c++ files.
 
 nmap <C-S-m> :!clear && g++ -o %:r %:p && ./%:r<cr>
-
-" NERDTreeToggle
-nmap <C-n> :NERDTreeToggle<CR>
-
-" " Open nerd tree when no file is opened in vim.
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" Close vim when only nerd tree is open.
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
 " Change the key mapping for navigating through splits.
@@ -119,6 +109,7 @@ nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>w :w!<cr>
 
 " We won't use this in tmux.
 " noremap <silent> <C-Left> :vertical resize +3<CR>
@@ -142,9 +133,9 @@ map <leader>th <C-w>t<C-w>H
 map <leader>tk <C-w>t<C-w>K
 
 " This is for Snippets.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " trigger `autoread` when files changes on disk
 set autoread
@@ -187,14 +178,14 @@ let g:airline_symbols.linenr = ' '
 " Rainbow Parenthesis.
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle"
 
-let g:rainbow_conf = {
-\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-\	'ctermfgs': ['darkmagenta','cyan','magenta','darkblue','red','lightblue', 'darkyellow', 'lightcyan', 'lightmagenta'],
-\	'guis': [''],
-\	'cterms': [''],
-\	'operators': '_,_',
-\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold','start=/{/ end=/}/ fold']
-\}
+" let g:rainbow_conf = {
+" \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+" \	'ctermfgs': ['darkmagenta','cyan','magenta','darkblue','red','lightblue', 'darkyellow', 'lightcyan', 'lightmagenta'],
+" \	'guis': [''],
+" \	'cterms': [''],
+" \	'operators': '_,_',
+" \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold','start=/{/ end=/}/ fold']
+" \}
 
 " This is to stop the weird behaviour of vim with tmux.
 " P.S this are the key bindings for the fzf plugin.
@@ -218,16 +209,16 @@ let g:bracey_server_port=4400
 
 
 " CTRL-P
-let g:ctrlp_match_window = 'bottom,order:ttb'
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+" let g:ctrlp_match_window = 'bottom,order:ttb'
+" let g:ctrlp_switch_buffer = 0
+" let g:ctrlp_working_path_mode = 0
+" let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
 if executable('rg')
     let g:rg_derive_root='true'
 endif
 
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+" let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 
 " Folds
@@ -251,6 +242,10 @@ let g:coc_global_extensions = [
   \ 'coc-eslint',
   \ 'coc-prettier',
   \ 'coc-json',
+  \ 'coc-clangd',
+  \ 'coc-explorer',
+  \ 'coc-html',
+  \ 'coc-css',
   \ ]
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
@@ -269,11 +264,7 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+inoremap <silent><expr> <c-@> coc#refresh()
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
@@ -355,8 +346,9 @@ endif
 
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+" This will hang the vim.
+" nmap <silent> <C-s> <Plug>(coc-range-select)
+" xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -372,26 +364,79 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" Mappings for CoCList
-" Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-
+" Clang Formatter.
 if !executable('clang-format') && executable('clang-format-3.5')
   let g:clang_format#command = 'clang-format-3.5'
 endif
 let g:clang_format#auto_format = 1
+
+" fzf for file searching
+nnoremap <C-p> :Files<cr>
+nnoremap <Leader>b :Buffers<cr>
+nnoremap <Leader>s :BLines<cr>
+" let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
+" Empty value to disable preview window altogether
+let g:fzf_preview_window = []
+
+" find word under cursor
+nnoremap <leader>prr :CocSearch <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
+
+let g:coc_explorer_global_presets = {
+\   '.vim': {
+\     'root-uri': '~/.vim',
+\   },
+\   'cocConfig': {
+\      'root-uri': '~/.config/coc',
+\   },
+\   'tab': {
+\     'position': 'tab',
+\     'quit-on-open': v:true,
+\   },
+\   'floating': {
+\     'position': 'floating',
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'floatingTop': {
+\     'position': 'floating',
+\     'floating-position': 'center-top',
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'floatingLeftside': {
+\     'position': 'floating',
+\     'floating-position': 'left-center',
+\     'floating-width': 50,
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'floatingRightside': {
+\     'position': 'floating',
+\     'floating-position': 'right-center',
+\     'floating-width': 50,
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'simplify': {
+\     'file-child-template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
+\   },
+\   'buffer': {
+\     'sources': [{'name': 'buffer', 'expand': v:true}]
+\   },
+\ }
+
+" Use preset argument to open it
+nmap <space>ed :CocCommand explorer --preset .vim<CR>
+" nmap <space>ef :CocCommand explorer --preset floating<CR>
+nmap <space>ec :CocCommand explorer --preset CocConfig<CR>
+
+nmap <C-n> :CocCommand explorer<CR>
+nmap <C-b> :CocCommand explorer --preset buffer<CR>
+
+" List all presets
+nmap <space>el :CocList explPresets
+
+" If only coc explorer is open then close it.
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+
+colorscheme nord
+set background=dark
+let g:nord_uniform_diff_background = 1
