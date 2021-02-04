@@ -4,7 +4,8 @@ zmodload zsh/zprof
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/sentinel/.oh-my-zsh"
-
+export NVM_LAZY_LOAD=true
+export NVM_LAZY_LOAD_EXTRA_COMMANDS=('vim')
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -70,18 +71,17 @@ HIST_STAMPS="dd.mm.yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+    zshfl
     evalcache
+    zsh-nvm
     git
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    extract
-    colored-man-pages
-    # sudo
     history
     tmux
-    nvm
+    zsh-autosuggestions
+    zsh-syntax-highlighting
     )
 
+. /home/sentinel/.oh-my-zsh/custom/plugins/z-jump/z.sh
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -111,23 +111,65 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=243,underline"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH="$HOME/.jenv/bin:$PATH"
-_evalcache jenv init -
+# export PATH="$HOME/.jenv/bin:$PATH"
+# _evalcache jenv init -
+# eval "$(jenv init -)"
+
+# Try to find jenv, if it's not on the path
+export JENV_ROOT="${JENV_ROOT:=${HOME}/.jenv}"
+if ! type jenv > /dev/null && [ -f "${JENV_ROOT}/bin/jenv" ]; then
+    export PATH="${JENV_ROOT}/bin:${PATH}"
+fi
+
+# Lazy load jenv
+if type jenv > /dev/null; then
+    export PATH="${JENV_ROOT}/bin:${JENV_ROOT}/shims:${PATH}"
+    function jenv() {
+        unset -f jenv
+        eval "$(command jenv init -)"
+        jenv $@
+    }
+fi
+
+
+
 
 alias zshconfig="vim ~/.zshrc"
 alias zshsource="source ~/.zshrc"
 alias python="python3"
 alias pip="pip3"
-alias vimconfig="vim ~/.vimrc"
+alias vimconfig="vim ~/.config/nvim/init.vim"
+alias nnvim="nv.sh"
 
-export NVM_LAZY_LOAD=true
-export NVM_COMPLETION=true
+source /usr/share/doc/fzf/examples/key-bindings.zsh
 
-export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
-# timezsh() {
-#   shell=${1-$SHELL}
-#   for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
-# }
+source /usr/share/doc/fzf/examples/completion.zsh
+
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!{.git,node_modules}/*" 2> /dev/null'
+
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# To get info about the git commits in local repo.
+alias gitinfo="git log --oneline | fzf --preview 'git show --name-only {1}'"
+# To get info about processess.
+alias psinfo="ps axo pid,rss,comm --no-headers | fzf --preview 'ps o args {1}; ps mu {1}'"
+# To get info about apt dependencies.
+# alias dependinfo="apt-cache search . | fzf --preview 'apt-cache depends {1}'"
+
+
+# Common conventions to make user defined fuctions:
+# 1. Always make a .zshfn dir if not exist in ~/ .
+# 2. Add file with the name of fuction you want to define.
+# 3. File should be extensionless.(eg. clicolors)
+# 4. Paste below lines to load the files.
+
+# To load user define funtions into zsh.
+# fpath=( ~/.zshfn "${fpath[@]}" )
+# For now only load clicolors.
+# timezsh takes too much time while sourcing.
+# autoload -Uz clicolors
+
+# For loading all the function in the file name ~/.zshfn
+# This should be preferred.
+# autoload -Uz $fpath[1]/*(.:t)
