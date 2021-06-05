@@ -139,7 +139,6 @@ alias zshsource="source ~/.zshrc"
 alias python="python3"
 alias pip="pip3"
 alias vimconfig="vim ~/.config/nvim/init.vim"
-alias nnvim="nv.sh"
 
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 
