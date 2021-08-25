@@ -12,7 +12,7 @@ HIST_STAMPS="dd.mm.yyyy"
 
 plugins=(
 	zshfl
-    ubuntu
+  ubuntu
 	git
 	history
 	zsh-autosuggestions
@@ -73,6 +73,11 @@ if type jenv > /dev/null; then
         jenv $@
     }
 fi
+
+# lazy loading prevent the JAVA_HOME to be set.
+# we have to load jenv inorder to set JAVA_HOME.
+
+eval "$(jenv init -)"
 
 # ----------------------------------------------------------------------------------------------------------------
 
