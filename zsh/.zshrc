@@ -3,7 +3,7 @@ zmodload zsh/zprof
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/sentinel/.oh-my-zsh"
+export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
@@ -13,6 +13,7 @@ HIST_STAMPS="dd.mm.yyyy"
 plugins=(
 	zshfl
   ubuntu
+  z
 	git
 	history
 	zsh-autosuggestions
@@ -98,3 +99,6 @@ source $(dirname $(gem which colorls))/tab_complete.sh
 
 # dotfiles
 export DOTFILES_REPO_PATH="~/gitRepos/MyDotFiles"
+export M2_HOME=/usr/local/apache-maven/apache-maven-3.6.3
+export M2=$M2_HOME/bin
+export PATH=$M2:$PATH
