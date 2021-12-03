@@ -93,6 +93,13 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # ----------------------------------------------------------------------------------------------------------------
 
+# -- MINI-CONDA --------------------------------------------------------------------------------------------------
+source ~/miniconda3/etc/profile.d/conda.sh
+if [[ -z ${CONDA_PREFIX+x} ]]; then
+    export PATH="~/miniconda3/bin:$PATH"
+fi
+# ----------------------------------------------------------------------------------------------------------------
+
 
 # Colorls
 source $(dirname $(gem which colorls))/tab_complete.sh
