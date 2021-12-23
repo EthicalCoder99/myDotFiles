@@ -1,6 +1,8 @@
 {
-	"nvim": "~/.config/nvim",
-        "alacritty/alacritty.yml": "~/.config/alacritty/alacritty.yml",
-        "zsh/.zshrc": "~/.zshrc",
-        "zsh/.zshenv": "~/.zshenv"
+  "nvim": "~/.config/nvim",
+  "alacritty/alacritty.yml": "~/.config/alacritty/alacritty.yml",
+  "zsh/.zshrc": "~/.zshrc",
+  "zsh/.zshenv": "~/.zshenv",
+  "tmux/.tmux.conf": "~/.tmux.conf",
+  "tmux/.tmux.conf.local": "~/.tmux.conf.local"
 }

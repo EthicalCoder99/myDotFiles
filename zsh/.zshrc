@@ -6,16 +6,20 @@ zmodload zsh/zprof
 export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
+ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_UNICODE=true
 
 HISTCONTROL=ignoredups:ignorespace
 HIST_STAMPS="dd.mm.yyyy"
 
 plugins=(
 	zshfl
+  docker-compos
   ubuntu
   z
 	git
 	history
+  tmux
 	zsh-autosuggestions
 	zsh-syntax-highlighting
 	)
