@@ -113,3 +113,12 @@ export DOTFILES_REPO_PATH="~/gitRepos/MyDotFiles"
 export M2_HOME=/usr/local/apache-maven/apache-maven-3.6.3
 export M2=$M2_HOME/bin
 export PATH=$M2:$PATH
+
+# Make NPM non-sudo
+NPM_PACKAGES="${HOME}/.npm-packages"
+
+export PATH="$PATH:$NPM_PACKAGES/bin"
+
+# Preserve MANPATH if you already defined it somewhere in your config.
+# Otherwise, fall back to `manpath` so we can inherit from `/etc/manpath`.
+export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"

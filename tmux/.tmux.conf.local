@@ -108,10 +108,10 @@ tmux_conf_theme_window_bg="default"
 # highlight focused pane (tmux >= 2.1), possible values are:
 #   - true
 #   - false (default)
-tmux_conf_theme_highlight_focused_pane=true
+# tmux_conf_theme_highlight_focused_pane=true
 
 # focused pane colours:
-tmux_conf_theme_focused_pane_bg="$tmux_conf_theme_colour_grey"
+# tmux_conf_theme_focused_pane_bg="$tmux_conf_theme_colour_grey"
 
 # pane border style, possible values are:
 #   - thin (default)
@@ -244,7 +244,7 @@ tmux_conf_theme_right_separator_sub='\uE0B3'  #   PowerlineSymbols.otf font, see
 #     - #{uptime_s}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_status_left=" ❐ #S"
+tmux_conf_theme_status_left=" ❐ #S "
 tmux_conf_theme_status_right=" #{prefix_highlight}#{mouse}#{pairing}#{synchronized}, %R, %d %b | #{username}#{root} | #{hostname} "
 
 # status left style
@@ -403,10 +403,13 @@ tmux_conf_uninstall_plugins_on_reload=false
 # visit https://github.com/tmux-plugins for available plugins
 #set -g @plugin 'tmux-plugins/tmux-copycat'
 #set -g @plugin 'tmux-plugins/tmux-cpu'
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @continuum-restore 'on'
+# set -g @plugin 'tmux-plugins/tmux-resurrect'
+# set -g @plugin 'tmux-plugins/tmux-continuum'
+# set -g @continuum-restore 'on'
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -g @plugin 'nhdaly/tmux-better-mouse-mode'
+
+set -g @scroll-speed-num-lines-per-scroll '1'
 
 set -g @prefix_highlight_show_copy_mode 'on'
 set -g @prefix_highlight_copy_mode_attr 'fg=#303030,bg=#e5c07b,bold' # fg=grey, bg=yellow
