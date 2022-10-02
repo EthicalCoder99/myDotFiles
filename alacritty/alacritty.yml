@@ -18,6 +18,8 @@ window:
 
   gtk_theme_variant: None
 
+  opacity: 0.85
+
 scrolling:
   history: 10000
   multiplier: 1
@@ -26,7 +28,7 @@ scrolling:
 font:
   # Normal font face
   normal:
-    family: "FiraMono Nerd Font"
+    family: "FuraMono Nerd Font"
     style: Medium
 
   # Bold font face
@@ -36,12 +38,12 @@ font:
 
   # Italic font face
   italics:
-    family: "FiraMono Nerd Font"
+    family: "FuraMono Nerd Font"
     style: Italic
 
   # Bold italic font face
   bold_italic:
-    family: "FiraMono Nerd Font"
+    family: "FuraMono Nerd Font"
     style: Bold Italic
 
   # Point size
@@ -113,7 +115,7 @@ search:
 #  background: '#c5c8c6'
 #  foreground: '#1d1f21'
 
-background_opacity: 0.85
+# background_opacity: 0.85
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"

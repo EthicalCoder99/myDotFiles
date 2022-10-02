@@ -1,7 +1,7 @@
 -- change cwd to current directory
 vim.cmd("cd %:p:h")
 require("plugins._packer")
-vim.cmd('colorscheme onedark')
+-- vim.cmd('colorscheme onedark')
 
 -- load modules
 require("modules._settings")

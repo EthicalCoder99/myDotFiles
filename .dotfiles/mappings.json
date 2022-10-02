@@ -4,5 +4,6 @@
   "zsh/.zshrc": "~/.zshrc",
   "zsh/.zshenv": "~/.zshenv",
   "tmux/.tmux.conf": "~/.tmux.conf",
-  "tmux/.tmux.conf.local": "~/.tmux.conf.local"
+  "tmux/.tmux.conf.local": "~/.tmux.conf.local",
+  "zsh/zshfl/zshfl.plugin.zsh": "~/.oh-my-zsh/custom/plugins/zshfl/zshfl.plugin.zsh"
 }

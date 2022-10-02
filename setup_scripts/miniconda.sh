@@ -27,3 +27,7 @@
 # fi
 # unset __conda_setup
 # # <<< conda initialize <<<
+
+# Change download channel to conda-forge
+# conda config --add channels conda-forge
+# conda config --set channel_priority strict

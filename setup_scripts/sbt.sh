@@ -1,7 +1,7 @@
 # SBT
 
 # Method 1.
-# bre install sbt
+# brew install sbt
 
 # Method 2.
 # sudo su
